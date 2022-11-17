@@ -1,45 +1,27 @@
-<template>
-  <div class="container">
-    <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <a href="/" class="navbar-brand">
-        <font-awesome-icon icon="home" />Akinoriv
-      </a>
-      <div class="navbar-nav mr-auto">
-        <li class="nav-item">
-          <router-link v-if="currentUser" to="/user" class="nav-link">
-            User
-          </router-link>
-        </li>
-      </div>
+<template lang="pug">
+.container
+  nav.navbar
+    a.navbar-brand(href="/")
+      font-awesome-icon(icon="home") Akinoriv
+    .navbar-nav.mr-auto
+      li.nav-item
+        router-link.nav-link(v-if="currentUser" to="/user") User
 
-      <div v-if="!currentUser" class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <router-link to="/register" class="nav-link">
-            <font-awesome-icon icon="user-plus" /> Sign Up
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link to="/login" class="nav-link">
-            <font-awesome-icon icon="sign-in-alt" /> Login
-          </router-link>
-        </li>
-      </div>
+    .navbar-nav.ml-auto(v-if="!currentUser")
+      li.nav-item
+        router-link.nav-link(to="/register")
+          font-awesome-icon(icon="user-plus") Sign Up
+      li.nav-item
+        router-link.nav-link(to="/login")
+          font-awesome-icon(icon="sign-in-alt") Login
 
-      <div v-if="currentUser" class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <router-link to="/profile" class="nav-link">
-            <font-awesome-icon icon="user" />
-            {{ currentUser.username }}
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" @click.prevent="logOut">
-            <font-awesome-icon icon="sign-out-alt" /> LogOut
-          </a>
-        </li>
-      </div>
-    </nav>
-  </div>
+    .navbar-nav.ml-auto(v-if="currentUser")
+      li.nav-item
+        router-link.nav-link(to="/profile")
+          font-awesome-icon(icon="user") {{ currentUser.username }}
+      li.nav-item
+        a.nav-link(@click.prevent="logOut")
+          font-awesome-icon(icon="sign-out-alt") LogOut
 </template>
 
 <script setup>

@@ -1,23 +1,14 @@
 <template>
   <div class="container">
     <nav class="navbar navbar-expand navbar-dark bg-dark">
-      <a href="/" class="navbar-brand">bezKoder</a>
+      <a href="/" class="navbar-brand">
+        <font-awesome-icon icon="home" />Akinoriv
+      </a>
       <div class="navbar-nav mr-auto">
         <li class="nav-item">
-          <router-link to="/home" class="nav-link">
-            <font-awesome-icon icon="home" /> Home
+          <router-link v-if="currentUser" to="/user" class="nav-link">
+            User
           </router-link>
-        </li>
-        <li v-if="showAdminBoard" class="nav-item">
-          <router-link to="/admin" class="nav-link">Admin Board</router-link>
-        </li>
-        <li v-if="showModeratorBoard" class="nav-item">
-          <router-link to="/mod" class="nav-link">Moderator Board</router-link>
-        </li>
-        <li class="nav-item">
-          <router-link v-if="currentUser" to="/user" class="nav-link"
-            >User</router-link
-          >
         </li>
       </div>
 
@@ -51,35 +42,22 @@
   </div>
 </template>
 
-<script>
-export default {
-  computed: {
-    currentUser() {
-      return this.$store.state.auth.user;
-    },
-    showAdminBoard() {
-      if (this.currentUser && this.currentUser["roles"]) {
-        return this.currentUser["roles"].includes("ROLE_ADMIN");
-      }
+<script setup>
+import { computed } from "vue";
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
-      return false;
-    },
-    showModeratorBoard() {
-      if (this.currentUser && this.currentUser["roles"]) {
-        return this.currentUser["roles"].includes("ROLE_MODERATOR");
-      }
+const store = useStore();
+const router = useRouter();
 
-      return false;
-    },
-  },
-  methods: {
-    logOut() {
-      this.$store.dispatch("auth/logout");
-      this.$router.push("/login");
-    },
-  },
-};
-// }
+const currentUser = computed(() => store.state.auth.user);
+
+function logOut() {
+  store.dispatch("auth/logout");
+  router.push({
+    name: "login",
+  });
+}
 </script>
 
 <style lang="scss" scoped>

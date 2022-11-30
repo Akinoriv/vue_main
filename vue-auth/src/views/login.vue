@@ -1,11 +1,7 @@
 <template>
   <div class="col-md-12">
     <div class="card card-container">
-      <img
-        id="profile-img"
-        src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-        class="profile-img-card"
-      />
+      <Person />
       <Form @submit="handleLogin" :validation-schema="schema">
         <div class="form-group">
           <label for="username">Username</label>
@@ -40,6 +36,8 @@
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
+import Person from "../components/Person.vue";
+
 import * as yup from "yup";
 
 export default {
@@ -47,6 +45,7 @@ export default {
   components: {
     Form,
     Field,
+    Person,
     ErrorMessage,
   },
   data() {
@@ -106,16 +105,16 @@ label {
 }
 
 .card {
-  background-color: #f7f7f7;
+  background-color: #41414114;
   padding: 20px 25px 30px;
   margin: 0 auto 25px;
   margin-top: 50px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
-  -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
-  box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: inset 0px 0px 20px 0px rgb(0 0 0 / 30%);
+  -webkit-box-shadow: inset 0px 0px 20px 0px rgb(0 0 0 / 30%);
+  box-shadow: inset 0px 0px 20px 0px rgb(0 0 0 / 30%);
 }
 
 .profile-img-card {

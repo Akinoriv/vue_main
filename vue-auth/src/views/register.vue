@@ -1,52 +1,40 @@
-<template>
-  <div class="col-md-12">
-    <div class="card card-container">
-      <Person />
+<template lang="pug">
+.test
+  .card.card-container
+    Form(@submit="handleRegister" :validation-schema="schema")
+      div(v-if="!successful")
+        .form-group
+          label(for="username") Username
+          Field(name="username" type="text" class="form-control")
+          ErrorMessage(name="username" class="error-feedback")
 
-      <Form @submit="handleRegister" :validation-schema="schema">
-        <div v-if="!successful">
-          <div class="form-group">
-            <label for="username">Username</label>
-            <Field name="username" type="text" class="form-control" />
-            <ErrorMessage name="username" class="error-feedback" />
-          </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <Field name="email" type="email" class="form-control" />
-            <ErrorMessage name="email" class="error-feedback" />
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <Field name="password" type="password" class="form-control" />
-            <ErrorMessage name="password" class="error-feedback" />
-          </div>
+        .form-group
+          label(for="email") Email
+          Field(name="email" type="email" class="form-control")
+          ErrorMessage(name="email" class="error-feedback")
 
-          <div class="form-group">
-            <button class="btn btn-primary btn-block" :disabled="loading">
-              <span
-                v-show="loading"
-                class="spinner-border spinner-border-sm"
-              ></span>
-              Sign Up qwertyu
-            </button>
-          </div>
-        </div>
-      </Form>
+        .form-group
+          label(for="password") Password
+          Field(name="password" type="password" class="form-control")
+          ErrorMessage(name="password" class="error-feedback")
 
-      <div
+
+        .form-group
+          button.btn.btn-primary.btn-block(:disabled="loading")
+            span.spinner-border.spinner-border-sm(v-show="loading") Sign Up
+
+      .alert(
         v-if="message"
-        class="alert"
         :class="successful ? 'alert-success' : 'alert-danger'"
-      >
-        {{ message }}
-      </div>
-    </div>
-  </div>
+      ) {{ message }}
+
+  .card.card-container
+    Person-constructor(:personaje="personaje")
 </template>
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
-import Person from "../components/Person.vue";
+import PersonConstructor from "../components/PersonConstructor.vue";
 import * as yup from "yup";
 
 export default {
@@ -54,11 +42,12 @@ export default {
   components: {
     Form,
     Field,
-    Person,
+    PersonConstructor,
     ErrorMessage,
   },
   data() {
     const schema = yup.object().shape({
+      personaje: yup.string(),
       username: yup
         .string()
         .required("Username is required!")
@@ -80,6 +69,12 @@ export default {
       successful: false,
       loading: false,
       message: "",
+      personaje: {
+        face: Math.floor(Math.random() * 11) + 1,
+        cheeks: Math.floor(Math.random() * 2) + 1,
+        eyes: Math.floor(Math.random() * 11) + 1,
+        rot: Math.floor(Math.random() * 12) + 1,
+      },
       schema,
     };
   },
@@ -125,6 +120,10 @@ export default {
 label {
   display: block;
   margin-top: 10px;
+}
+
+.test {
+  display: flex;
 }
 
 .card-container.card {

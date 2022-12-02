@@ -3,6 +3,9 @@
     <header class="jumbotron">
       <h3>
         <strong>{{ currentUser.username }}</strong>
+        <strong v-if="currentUser.personaje"
+          >{{ currentUser.personaje }} personaje</strong
+        >
         Profile
       </h3>
     </header>

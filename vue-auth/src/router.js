@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Home from "./components/Home.vue";
 import Login from "./views/login.vue";
-import Register from "./components/Register.vue";
+import Register from "./views/register.vue";
 // lazy-loaded
 const Profile = () => import("./components/Profile.vue");
 const BoardUser = () => import("./components/BoardUser.vue");

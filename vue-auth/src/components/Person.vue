@@ -1,16 +1,16 @@
 <template lang="pug">
 .container
   .person 
-    img.person__item.face(src=`@/assets/persons/face_${Math.floor(Math.random() * 6)+1}.svg`)
-    img.person__item.cheeks(src=`@/assets/persons/cheeks_${Math.floor(Math.random() * 3)+1}.svg`)
-    img.person__item.eyes(src=`@/assets/persons/eyes_${Math.floor(Math.random() * 6)+1}.svg`)
-    img.person__item.rot(src=`@/assets/persons/rot_${Math.floor(Math.random() * 8)+1}.svg`)
+    img.person__item.face(src=`@/assets/persons/face_${Math.floor(Math.random() * 11)+1}.svg`)
+    img.person__item.cheeks(:src="require(`@/assets/persons/cheeks_${test}.svg`)")
+    img.person__item.eyes(src=`@/assets/persons/eyes_${Math.floor(Math.random() * 12)+1}.svg`)
+    img.person__item.rot(src=`@/assets/persons/rot_${Math.floor(Math.random() * 12)+1}.svg`)
 </template>
 
 <script setup>
 import { computed, toRefs } from "vue";
 
-const array = Math.floor(Math.random() * 2) + 1;
+const array = toRefs(Math.floor(Math.random() * 2) + 1);
 const color = "#" + (((1 << 24) * Math.random()) | 0).toString(16);
 const test = computed(() => Math.floor(Math.random() * 2) + 1);
 
@@ -36,7 +36,7 @@ svg {
   }
 }
 .face {
-  filter: hue-rotate(180deg) drop-shadow(1px 1px 20px rgb(0 0 0 / 70%))
+  filter: hue-rotate(180deg) drop-shadow(1px 1px 5px rgb(0 0 0 / 70%))
     brightness(1.5);
   width: 100%;
 }

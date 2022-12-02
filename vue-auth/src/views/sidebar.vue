@@ -50,8 +50,9 @@ a {
 .navbar {
   width: 100%;
   padding: 8px;
-  background: gainsboro;
-  color: gray;
+  background: #41414114;
+  color: #454545;
+  box-shadow: 1px 5px 15px 0px rgb(0 0 0 / 30%);
 
   &-brand {
     background: url(../assets/logo.png) center no-repeat;

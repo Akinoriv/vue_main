@@ -1,19 +1,19 @@
 <template lang="pug">
 .container
   .personaje 
-    img.personaje__item.face(:src="require(`@/assets/personajes/face_${personaje.face}.svg`)")
-    img.personaje__item.cheeks(:src="require(`@/assets/personajes/cheeks_${personaje.cheeks}.svg`)")
-    img.personaje__item.eyes(:src="require(`@/assets/personajes/eyes_${personaje.eyes}.svg`)")
-    img.personaje__item.rot(:src="require(`@/assets/personajes/rot_${personaje.rot}.svg`)")
+    img.personaje__item.face(:src="require(`@/assets/personajes/face_${changedPersonaje.face}.svg`)")
+    img.personaje__item.cheeks(:src="require(`@/assets/personajes/cheeks_${changedPersonaje.cheeks}.svg`)")
+    img.personaje__item.eyes(:src="require(`@/assets/personajes/eyes_${changedPersonaje.eyes}.svg`)")
+    img.personaje__item.rot(:src="require(`@/assets/personajes/rot_${changedPersonaje.rot}.svg`)")
 
   .nav
-    .prev(data-icon="ei-arrow-left" @click="next(personajeo.eyes--)")
+    .prev(data-icon="ei-arrow-left" @click="changedPersonaje.eyes = 5")
     .eyes(data-icon="ei-eye")
-    .next(data-icon="ei-arrow-right" @click="next(personaje.eyes++)")
+    .nav-next(data-icon="ei-arrow-right" @click="test")
 </template>
 
 <script setup>
-import { computed, toRefs, defineProps } from "vue";
+import { computed, ref, toRefs, defineProps } from "vue";
 
 const props = defineProps({
   personaje: {
@@ -22,9 +22,17 @@ const props = defineProps({
 });
 
 const { personaje } = toRefs(props);
-const personajeo = toRefs(personaje);
+let changedPersonaje = ref({
+  face: personaje.value.split(", ")[0],
+  cheeks: personaje.value.split(", ")[1],
+  eyes: personaje.value.split(", ").map(Number)[2],
+  rot: personaje.value.split(", ")[3],
+});
 
-console.log(personaje, personajeo);
+function test() {
+  console.log(changedPersonaje.value);
+  changedPersonaje.value.eyes = 1;
+}
 
 const color = "#" + (((1 << 24) * Math.random()) | 0).toString(16);
 </script>
@@ -49,11 +57,15 @@ svg {
 }
 
 .nav {
-  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: nowrap;
+
+  &-next {
+    cursor: pointer;
+    background: red;
+  }
 }
 .face {
   filter: hue-rotate(180deg) drop-shadow(1px 1px 5px rgb(0 0 0 / 70%))

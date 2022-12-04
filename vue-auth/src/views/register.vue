@@ -47,7 +47,6 @@ export default {
   },
   data() {
     const schema = yup.object().shape({
-      personaje: yup.string(),
       username: yup
         .string()
         .required("Username is required!")
@@ -65,16 +64,20 @@ export default {
         .max(40, "Must be maximum 40 characters!"),
     });
 
+    // const personaje = `${
+    //   (Math.floor(Math.random() * 11) + 1,
+    //   Math.floor(Math.random() * 2) + 1,
+    //   Math.floor(Math.random() * 11) + 1,
+    //   Math.floor(Math.random() * 12) + 1)
+    // }`;
+
+    const personaje = `10, 2, 3, 4`;
+
     return {
       successful: false,
       loading: false,
       message: "",
-      personaje: {
-        face: Math.floor(Math.random() * 11) + 1,
-        cheeks: Math.floor(Math.random() * 2) + 1,
-        eyes: Math.floor(Math.random() * 11) + 1,
-        rot: Math.floor(Math.random() * 12) + 1,
-      },
+      personaje,
       schema,
     };
   },
@@ -94,23 +97,26 @@ export default {
       this.successful = false;
       this.loading = true;
 
-      this.$store.dispatch("auth/register", user).then(
-        (data) => {
-          this.message = data.message;
-          this.successful = true;
-          this.loading = false;
-        },
-        (error) => {
-          this.message =
-            (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-            error.message ||
-            error.toString();
-          this.successful = false;
-          this.loading = false;
-        }
-      );
+      this.$store
+        .dispatch("auth/register", { ...user, personaje: this.personaje })
+        .then(
+          (data) => {
+            console.log(user, data);
+            this.message = data.message;
+            this.successful = true;
+            this.loading = false;
+          },
+          (error) => {
+            this.message =
+              (error.response &&
+                error.response.data &&
+                error.response.data.message) ||
+              error.message ||
+              error.toString();
+            this.successful = false;
+            this.loading = false;
+          }
+        );
     },
   },
 };

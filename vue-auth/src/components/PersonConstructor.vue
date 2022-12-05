@@ -1,19 +1,27 @@
 <template lang="pug">
 .container
-  .personaje 
+  Person(:personaje="changedPersonaje")
+  //- .personaje 
     img.personaje__item.face(:src="require(`@/assets/personajes/face_${changedPersonaje.face}.svg`)")
     img.personaje__item.cheeks(:src="require(`@/assets/personajes/cheeks_${changedPersonaje.cheeks}.svg`)")
     img.personaje__item.eyes(:src="require(`@/assets/personajes/eyes_${changedPersonaje.eyes}.svg`)")
     img.personaje__item.rot(:src="require(`@/assets/personajes/rot_${changedPersonaje.rot}.svg`)")
 
+  // TODO: add v-for for changedPersonaje
   .nav
-    .prev(data-icon="ei-arrow-left" @click="changedPersonaje.eyes = 5")
-    .eyes(data-icon="ei-eye")
-    .nav-next(data-icon="ei-arrow-right" @click="test")
+    .nav-block
+      font-awesome-icon.icon.icon-prev(icon="arrow-left" @click="prev('eyes', 11)")
+      font-awesome-icon.icon.icon-center(icon="eye")
+      font-awesome-icon.icon.icon-next(icon="arrow-right" @click="next('eyes', 11)")
+    .nav-block
+      font-awesome-icon.icon.icon-prev(icon="arrow-left" @click="prev('rot', 12)")
+      font-awesome-icon.icon.icon-center(icon="meh-blank")
+      font-awesome-icon.icon.icon-next(icon="arrow-right" @click="next('rot', 12)")
 </template>
 
 <script setup>
-import { computed, ref, toRefs, defineProps } from "vue";
+import Person from "./Person.vue";
+import { computed, ref, toRefs, defineProps, defineEmits } from "vue";
 
 const props = defineProps({
   personaje: {
@@ -21,17 +29,55 @@ const props = defineProps({
   },
 });
 
-const { personaje } = toRefs(props);
-let changedPersonaje = ref({
-  face: personaje.value.split(", ")[0],
-  cheeks: personaje.value.split(", ")[1],
-  eyes: personaje.value.split(", ").map(Number)[2],
-  rot: personaje.value.split(", ")[3],
-});
+const emit = defineEmits();
 
-function test() {
-  console.log(changedPersonaje.value);
-  changedPersonaje.value.eyes = 1;
+const { personaje } = toRefs(props);
+
+let changedPersonaje = ref();
+
+console.log(personaje.value);
+
+if (personaje.value === null) {
+  changedPersonaje.value = {
+    face: Math.floor(Math.random() * 11) + 1,
+    cheeks: Math.floor(Math.random() * 2) + 1,
+    eyes: Math.floor(Math.random() * 11) + 1,
+    rot: Math.floor(Math.random() * 12) + 1,
+  };
+  emit("personaje", changedPersonaje.value);
+} else {
+  personajeParser(personaje.value);
+}
+
+// TODO: save length of imgs for personajes
+function personajeParser(personaje) {
+  console.log("personaje", personaje);
+  changedPersonaje.value = JSON.parse(personaje.value);
+  // changedPersonaje.value = {
+  //   face: personaje.split(", ")[0],
+  //   cheeks: personaje.split(", ")[1],
+  //   eyes: personaje.split(", ")[2],
+  //   rot: personaje.split(", ")[3],
+  // };
+
+  // $emit("update:modelValue", changedPersonaje.value);
+  // emit("personaje", changedPersonaje.value);
+}
+
+function prev(item, length) {
+  if (changedPersonaje.value[item] === 1) {
+    changedPersonaje.value[item] = length;
+  } else {
+    changedPersonaje.value[item]--;
+  }
+}
+
+function next(item, length) {
+  if (changedPersonaje.value[item] === length) {
+    changedPersonaje.value[item] = 1;
+  } else {
+    changedPersonaje.value[item]++;
+  }
 }
 
 const color = "#" + (((1 << 24) * Math.random()) | 0).toString(16);
@@ -51,6 +97,7 @@ svg {
 
   &__item {
     position: absolute;
+    user-select: none;
     left: 50%;
     transform: translateX(-50%);
   }
@@ -58,14 +105,20 @@ svg {
 
 .nav {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: nowrap;
+  flex-direction: column;
+  justify-content: space-around;
 
-  &-next {
-    cursor: pointer;
-    background: red;
+  &-block {
+    display: flex;
+    margin: 10px;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: nowrap;
   }
+}
+
+.icon {
+  cursor: pointer;
 }
 .face {
   filter: hue-rotate(180deg) drop-shadow(1px 1px 5px rgb(0 0 0 / 70%))

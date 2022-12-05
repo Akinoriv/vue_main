@@ -1,5 +1,5 @@
 <template lang="pug">
-.test
+.register
   .card.card-container
     Form(@submit="handleRegister" :validation-schema="schema")
       div(v-if="!successful")
@@ -21,7 +21,8 @@
 
         .form-group
           button.btn.btn-primary.btn-block(:disabled="loading")
-            span.spinner-border.spinner-border-sm(v-show="loading") Sign Up
+            span.spinner-border.spinner-border-sm(v-show="loading") 
+            span Sign Up
 
       .alert(
         v-if="message"
@@ -29,7 +30,9 @@
       ) {{ message }}
 
   .card.card-container
-    Person-constructor(:personaje="personaje")
+    Person-constructor(:personaje="personaje" @personaje="(i) => personaje = JSON.stringify(i)")
+    //- Person-constructor(:modelValue="personaje" @update:modelValue="n => personaje = n")
+
 </template>
 
 <script>
@@ -54,8 +57,8 @@ export default {
         .max(20, "Must be maximum 20 characters!"),
       email: yup
         .string()
-        .required("Email is required!")
-        .email("Email is invalid!")
+        // .required("Email is required!")
+        // .email("Email is invalid!")
         .max(50, "Must be maximum 50 characters!"),
       password: yup
         .string()
@@ -71,7 +74,7 @@ export default {
     //   Math.floor(Math.random() * 12) + 1)
     // }`;
 
-    const personaje = `10, 2, 3, 4`;
+    let personaje = null;
 
     return {
       successful: false,
@@ -127,21 +130,17 @@ label {
   display: block;
   margin-top: 10px;
 }
-
-.test {
+.register {
   display: flex;
-}
-
-.card-container.card {
-  max-width: 350px !important;
-  padding: 40px 40px;
+  align-items: stretch;
+  margin: 50px auto;
+  justify-content: center;
 }
 
 .card {
+  max-width: 350px !important;
+  padding: 40px 40px;
   background-color: #41414114;
-  padding: 20px 25px 30px;
-  margin: 0 auto 25px;
-  margin-top: 50px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
@@ -150,17 +149,9 @@ label {
   box-shadow: 0px 0px 20px 0px rgb(0 0 0 / 30%);
 }
 
-.profile-img-card {
-  width: 96px;
-  height: 96px;
-  margin: 0 auto 10px;
-  display: block;
-  -moz-border-radius: 50%;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
-}
-
 .error-feedback {
-  color: red;
+  position: absolute;
+  color: rgb(255, 0, 0);
+  font-size: 10px;
 }
 </style>

@@ -10,8 +10,7 @@ nav.navbar
           .navbar-link-text Sign Up
       li.navbar-item
         router-link.navbar-link(to="/login")
-          .navbar-link-icon(data-icon="ei-user")
-          //- font-awesome-icon.navbar-link-icon(icon="sign-in-alt") 
+          font-awesome-icon.navbar-link-icon(icon="sign-in-alt") 
           .navbar-link-text Login
 
     .navbar-nav.navbar-box(v-if="currentUser")

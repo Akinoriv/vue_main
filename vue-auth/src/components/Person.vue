@@ -1,20 +1,20 @@
 <template lang="pug">
-.container
-  .person 
-    img.person__item.face(src=`@/assets/persons/face_${Math.floor(Math.random() * 11)+1}.svg`)
-    img.person__item.cheeks(:src="require(`@/assets/persons/cheeks_${test}.svg`)")
-    img.person__item.eyes(src=`@/assets/persons/eyes_${Math.floor(Math.random() * 12)+1}.svg`)
-    img.person__item.rot(src=`@/assets/persons/rot_${Math.floor(Math.random() * 12)+1}.svg`)
+.personaje 
+  img.personaje__item.face(:src="require(`@/assets/personajes/face_${personaje.face}.svg`)")
+  img.personaje__item.cheeks(:src="require(`@/assets/personajes/cheeks_${personaje.cheeks}.svg`)")
+  img.personaje__item.eyes(:src="require(`@/assets/personajes/eyes_${personaje.eyes}.svg`)")
+  img.personaje__item.rot(:src="require(`@/assets/personajes/rot_${personaje.rot}.svg`)")
+
 </template>
 
 <script setup>
-import { computed, toRefs } from "vue";
+import { defineProps } from "vue";
 
-const array = toRefs(Math.floor(Math.random() * 2) + 1);
-const color = "#" + (((1 << 24) * Math.random()) | 0).toString(16);
-const test = computed(() => Math.floor(Math.random() * 2) + 1);
-
-console.log(array, color);
+const props = defineProps({
+  personaje: {
+    type: Object,
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -22,7 +22,7 @@ svg {
   fill: red;
 }
 
-.person {
+.personaje {
   position: relative;
   width: 100px;
   height: 100px;

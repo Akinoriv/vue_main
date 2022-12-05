@@ -3,11 +3,9 @@
     <header class="jumbotron">
       <h3>
         <strong>{{ currentUser.username }}</strong>
-        <strong v-if="currentUser.personaje"
-          >{{ currentUser.personaje }} personaje</strong
-        >
         Profile
       </h3>
+      <Person :personaje="JSON.parse(currentUser.personaje)" />
     </header>
     <p>
       <strong>Token:</strong>
@@ -30,8 +28,11 @@
 </template>
 
 <script>
+import Person from "./Person.vue";
+
 export default {
   name: "Profile",
+  components: { Person },
   computed: {
     currentUser() {
       return this.$store.state.auth.user;

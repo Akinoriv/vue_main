@@ -1,7 +1,6 @@
 <template>
   <div class="col-md-12">
     <div class="card card-container">
-      <Person />
       <Form @submit="handleLogin" :validation-schema="schema">
         <div class="form-group">
           <label for="username">Username</label>
@@ -36,7 +35,6 @@
 
 <script>
 import { Form, Field, ErrorMessage } from "vee-validate";
-import Person from "../components/Person.vue";
 
 import * as yup from "yup";
 
@@ -45,7 +43,6 @@ export default {
   components: {
     Form,
     Field,
-    Person,
     ErrorMessage,
   },
   data() {

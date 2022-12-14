@@ -95,6 +95,25 @@ export default {
     }
   },
   methods: {
+    handleLogin(user) {
+      this.loading = true;
+
+      this.$store.dispatch("auth/login", user).then(
+        () => {
+          this.$router.push("/profile");
+        },
+        (error) => {
+          this.loading = false;
+          this.message =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+        }
+      );
+    },
+
     handleRegister(user) {
       this.message = "";
       this.successful = false;
@@ -104,10 +123,10 @@ export default {
         .dispatch("auth/register", { ...user, personaje: this.personaje })
         .then(
           (data) => {
-            console.log(user, data);
             this.message = data.message;
             this.successful = true;
             this.loading = false;
+            this.handleLogin(user);
           },
           (error) => {
             this.message =

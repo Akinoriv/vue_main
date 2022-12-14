@@ -26,11 +26,11 @@ svg {
   position: relative;
   width: 100px;
   height: 100px;
-  margin: 0 auto;
   padding: 0;
 
   &__item {
     position: absolute;
+    user-select: none;
     left: 50%;
     transform: translateX(-50%);
   }

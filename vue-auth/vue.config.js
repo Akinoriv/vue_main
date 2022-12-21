@@ -1,6 +1,6 @@
 module.exports = {
   devServer: {
-    host: "akinoriv.com",
+    host: "localhost",
     port: 8081,
   },
 };

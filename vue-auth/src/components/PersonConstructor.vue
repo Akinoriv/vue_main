@@ -5,7 +5,7 @@
   .nav
     .nav-block
       font-awesome-icon.icon.icon-prev(icon="arrow-left" @click="prev('face', 11)")
-      font-awesome-icon.icon.icon-center(icon="eye")
+      font-awesome-icon.icon.icon-center(icon="meh-blank")
       font-awesome-icon.icon.icon-next(icon="arrow-right" @click="next('face', 11)")
     .nav-block
       font-awesome-icon.icon.icon-prev(icon="arrow-left" @click="prev('eyes', 11)")
@@ -13,7 +13,7 @@
       font-awesome-icon.icon.icon-next(icon="arrow-right" @click="next('eyes', 11)")
     .nav-block
       font-awesome-icon.icon.icon-prev(icon="arrow-left" @click="prev('rot', 12)")
-      font-awesome-icon.icon.icon-center(icon="meh-blank")
+      font-awesome-icon.icon.icon-center(icon="lips")
       font-awesome-icon.icon.icon-next(icon="arrow-right" @click="next('rot', 12)")
 </template>
 

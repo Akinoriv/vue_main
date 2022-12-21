@@ -13,7 +13,7 @@
       font-awesome-icon.icon.icon-next(icon="arrow-right" @click="next('eyes', 11)")
     .nav-block
       font-awesome-icon.icon.icon-prev(icon="arrow-left" @click="prev('rot', 12)")
-      font-awesome-icon.icon.icon-center(icon="lips")
+      .icon.icon-center lips
       font-awesome-icon.icon.icon-next(icon="arrow-right" @click="next('rot', 12)")
 </template>
 
